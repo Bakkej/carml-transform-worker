@@ -38,7 +38,6 @@
     rml:source :doc ;
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/*/*/*" ;
-    # rml:iterator "/*/gml:featureMember/*" ;
   ] ;
   rr:subjectMap [
     rr:template "http://data.labs.kadaster.nl/wau/id/bestemming/{./app:identificatie}" ;
@@ -47,12 +46,6 @@
     # rr:graphMap [rr:constant "" ] ;
   ] ;
   rr:predicateObjectMap
-    [
-      rr:predicate rdfs:label ;
-      rr:objectMap [
-        rml:reference "./app:naam" ;
-      ]
-    ] ,
     [
       rr:predicate imx-geo:bestemming ;
       rr:objectMap [
@@ -73,12 +66,12 @@
         #Hoe moet de URI eruit zien?
       ]
     ] ,
-    # [
-    #   rr:predicate imx-geo:geometrie ;
-    #   rr:objectMap [
-    #     rml:reference "./app:geometrie" ;
-    #   ]
-    # ] ,
+    [
+      rr:predicate imx-geo:geometrie ;
+      rr:objectMap [
+        rml:reference "./app:geometrie//gml:posList" ;
+      ]
+    ] ,
     [
       rr:predicate nen3610:identificatie ;
       rr:objectMap [
