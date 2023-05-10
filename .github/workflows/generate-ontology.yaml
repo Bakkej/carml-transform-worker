@@ -1,0 +1,23 @@
+name: Generate ontology
+
+on:
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+
+jobs:
+  execute-script:
+    name: execute-script
+    runs-on: ubuntu-20.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Run convert script
+        run: ./run.sh
+        shell: bash
+      - name: Commit pipeline output
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: Convert EAP model
+          add: output
