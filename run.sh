@@ -4,6 +4,6 @@ for f in input/*.gml
 do
  echo "Processing $f" # always double quote "$f" filename
  # do something on $f
- cat $f | java -jar carml-rdf4j.jar map -m rml/mapping.rml.ttl  -of ttl -P -o output/$(basename ${f}).ttl -p imx-geo,rdfs,best -pm rml/prefix.json 
+ cat $f | java -jar carml-rdf4j.jar map -m rml/mapping.rml.ttl  -of ttl -P -o output/$(basename ${f}##*/).ttl -p imx-geo,rdfs,best -pm rml/prefix.json 
 done
 
