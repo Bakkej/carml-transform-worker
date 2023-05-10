@@ -56,6 +56,7 @@
       rr:predicate imx-geo:bestemmingsplan ;
       rr:objectMap [
         rml:reference "./app:plangebied" ;
+        rr:datatype xsd:anyURI ;
         #Hoe moet de URI eruit zien?
       ]
     ] ,
@@ -63,13 +64,14 @@
       rr:predicate imx-geo:verwijzingNaarArtikel ;
       rr:objectMap [
         rml:reference "./app:verwijzingNaarTekst" ;
+        rr:datatype xsd:anyURI ;
         #Hoe moet de URI eruit zien?
       ]
     ] ,
     [
       rr:predicate imx-geo:geometrie ;
       rr:objectMap [
-        rml:reference "./app:geometrie//gml:posList" ;
+        rml:reference "./app:geometrie/*/*/*/gml:posList" ;
       ]
     ] ,
     [
