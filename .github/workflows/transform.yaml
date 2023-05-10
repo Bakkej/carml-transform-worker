@@ -1,4 +1,4 @@
-name: Generate ontology
+name: Transform
 
 on:
   workflow_dispatch:
