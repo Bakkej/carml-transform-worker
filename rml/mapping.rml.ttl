@@ -71,7 +71,7 @@
     [
       rr:predicate imx-geo:geometrie ;
       rr:objectMap [
-        rml:reference "./app:geometrie/*/*/*/gml:posList" ;
+        rml:reference "./app:geometrie" ;
       ]
     ] ,
     [
