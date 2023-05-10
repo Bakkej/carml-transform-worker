@@ -1,6 +1,6 @@
 curl -L https://github.com/carml/carml-jar/releases/download/v1.2.0/carml-jar-rdf4j-1.2.0-0.4.7.jar -o carml-rdf4j.jar
 
-for f in input/*
+for f in input/*.gml
 do
  echo "Processing $f" # always double quote "$f" filename
  # do something on $f
