@@ -1,0 +1,6 @@
+{
+  "imx-geo": "http://modellen.geostandaarden.nl/def/imx-geo#",
+  "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+  "best": "http://data.labs.kadaster.nl/wau/id/bestemming/",
+  "nen3610": "http://modellen.geostandaarden.nl/def/nen3610-2022#"
+}

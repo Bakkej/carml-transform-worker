@@ -1,0 +1,92 @@
+######################################################################################
+# 1. Prefixes
+######################################################################################
+
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix carml: <http://carml.taxonic.com/carml/> .
+@prefix ex: <http://www.example.com/> .
+@prefix : <https://wau.ldproxy.net/def/mapping#> .
+@prefix imx-geo: <http://modellen.geostandaarden.nl/def/imx-geo#> .
+@prefix nen3610: <http://modellen.geostandaarden.nl/def/nen3610-2022#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+
+######################################################################################
+# 2. Sources
+######################################################################################
+
+
+:doc a carml:Stream ;
+      # or in case of a file source use:
+      # carml:url "Dubbelbestemming.max.10.objects.gml" ;
+  carml:declaresNamespace
+  [ carml:namespacePrefix "app" ;
+    carml:namespaceName "http://www.deegree.org/app" ] ,
+  [ carml:namespacePrefix "gml" ;
+    carml:namespaceName "http://www.opengis.net/gml/3.2" ]
+.
+
+######################################################################################
+# 3. TriplesMaps
+######################################################################################
+
+
+:Bestemming a rr:TriplesMap ;
+  rml:logicalSource [
+    rml:source :doc ;
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/*/*/*" ;
+    # rml:iterator "/*/gml:featureMember/*" ;
+  ] ;
+  rr:subjectMap [
+    rr:template "http://data.labs.kadaster.nl/wau/id/bestemming/{./app:identificatie}" ;
+    rr:class imx-geo:Bestemming ;
+    rr:termType rr:IRI ;
+    # rr:graphMap [rr:constant "" ] ;
+  ] ;
+  rr:predicateObjectMap
+    [
+      rr:predicate rdfs:label ;
+      rr:objectMap [
+        rml:reference "./app:naam" ;
+      ]
+    ] ,
+    [
+      rr:predicate imx-geo:bestemming ;
+      rr:objectMap [
+        rml:reference "./app:naam" ;
+      ]
+    ] ,
+    [
+      rr:predicate imx-geo:bestemmingsplan ;
+      rr:objectMap [
+        rml:reference "./app:plangebied" ;
+        #Hoe moet de URI eruit zien?
+      ]
+    ] ,
+    [
+      rr:predicate imx-geo:verwijzingNaarArtikel ;
+      rr:objectMap [
+        rml:reference "./app:verwijzingNaarTekst" ;
+        #Hoe moet de URI eruit zien?
+      ]
+    ] ,
+    # [
+    #   rr:predicate imx-geo:geometrie ;
+    #   rr:objectMap [
+    #     rml:reference "./app:geometrie" ;
+    #   ]
+    # ] ,
+    [
+      rr:predicate nen3610:identificatie ;
+      rr:objectMap [
+        rml:reference "./app:identificatie" ;
+      ]
+    ]
+.
+
+######################################################################################
+#
+######################################################################################
