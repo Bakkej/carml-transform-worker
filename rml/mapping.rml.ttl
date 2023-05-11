@@ -68,7 +68,7 @@
     [
       rr:predicate imx-geo:bestemmingsplan ;
       rr:objectMap [
-        rml:reference "./app:plangebied" ;
+        rr:template "http://ruimtelijkeplannen.nl/documents/{./app:plangebied}" ;
         rr:datatype xsd:anyURI ;
         #Hoe moet de URI eruit zien?
       ]
@@ -129,7 +129,7 @@
         [
           rr:predicate fnPdok:valueParameter ;
           rr:objectMap [
-            rml:reference "serialize(app:geometrie)" ;
+            rml:reference "serialize(app:geometrie/*)" ;
             rr:datatype xsd:string ;
           ]
         ] ,
@@ -185,7 +185,7 @@
       [
         rr:predicate fnPdok:valueParameter ;
         rr:objectMap [
-          rml:reference "serialize(app:geometrie)" ;
+          rml:reference "serialize(app:geometrie/*)" ;
           rr:datatype xsd:string ;
         ]
       ]
