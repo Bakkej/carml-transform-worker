@@ -23,16 +23,10 @@
 # 2. Sources
 ######################################################################################
 
-:Bestemming_LogicalSource
+:LogicalSource
   rml:source :doc ;
   rml:referenceFormulation ql:XPath ;
   rml:iterator "/*/*/*" ;
-.
-
-:Geometrie_LogicalSource
-  rml:source :doc ;
-  rml:referenceFormulation ql:XPath ;
-  rml:iterator "//app:geometrie" ;
 .
 
 :doc a carml:Stream ;
@@ -45,13 +39,24 @@
     carml:namespaceName "http://www.opengis.net/gml/3.2" ]
 .
 
+:Function_LogicalSource
+  rml:source :doc ;
+  rml:referenceFormulation ql:XPath ;
+  rml:iterator "./dummy-non-matching-property" ;
+.
+
+:SimpleExecutionMapping
+  rr:template "identificatie";
+  rr:termType rr:BlankNode ;
+  rr:class fno:Execution ;
+.
 ######################################################################################
 # 3. TriplesMaps
 ######################################################################################
 
 
 :Bestemming a rr:TriplesMap ;
-  rml:logicalSource :Bestemming_LogicalSource ;
+  rml:logicalSource :LogicalSource ;
   rr:subjectMap [
     rr:template "http://data.labs.kadaster.nl/wau/id/bestemming/{./app:identificatie}" ;
     rr:class imx-geo:Bestemming ;
@@ -59,6 +64,16 @@
     # rr:graphMap [rr:constant "" ] ;
   ] ;
   rr:predicateObjectMap
+    [
+      rr:predicate nen3610:identificatie ;
+      rr:objectMap [
+        rml:reference "./app:identificatie" ;
+      ]
+    ] ,
+    [
+      rr:predicate nen3610:domein ;
+      rr:object "IMX.Geo.Bestemming"
+    ] ,
     [
       rr:predicate imx-geo:bestemming ;
       rr:objectMap [
@@ -88,33 +103,11 @@
       rr:objectMap [
         rr:parentTriplesMap :Geometrie ;
       ] ;
-    ] ,
-    [
-      rr:predicate nen3610:identificatie ;
-      rr:objectMap [
-        rml:reference "./app:identificatie" ;
-      ]
     ]
 .
 
-
-:Function_LogicalSource
-  rml:source :doc ;
-  rml:referenceFormulation ql:XPath ;
-  rml:iterator "./dummy-non-matching-property" ;
-.
-
-:SimpleExecutionMapping
-  rr:template "identificatie";
-  rr:termType rr:BlankNode ;
-  rr:class fno:Execution ;
-.
-######################################################################################
-# 3. TriplesMaps
-######################################################################################
-
 :Geometrie a rr:TriplesMap ;
-  rml:logicalSource :Bestemming_LogicalSource ;
+  rml:logicalSource :LogicalSource ;
   rr:subjectMap [
     # rr:template "http://data.labs.kadaster.nl/wau/id/geometrie/{./app:geometrie/*/@gml:id}" ;
     # rr:template "http://data.labs.kadaster.nl/wau/id/geometrie/{./app:fid}" ;
@@ -142,34 +135,34 @@
     # rr:graphMap [] ;
   ] ;
   rr:predicateObjectMap
-    # :Geometrie_gmltype ,
+    :Geometrie_gmltype ,
     # :Geometrie_geometrie ,
     :Geometrie_geometrie_wkt #,
     # :Geometrie_bounding_box #,
     # :Geometrie_bounding_box_wkt
 .
 
-# :Geometrie_gmltype a rr:PredicateObjectMap ;
-#   rr:predicate rdf:type ;
-#   rr:objectMap [
-#     fnml:functionValue [
-#       rml:logicalSource :Function_LogicalSource ;
-#       rr:subjectMap :SimpleExecutionMapping ;
-#       rr:predicateObjectMap
-#       [
-#         rr:predicate fno:executes ;
-#         rr:object fnPdok:getGmlClass ;
-#       ] ,
-#       [
-#         rr:predicate fnPdok:valueParameter ;
-#         rr:objectMap [
-#           rml:reference "serialize(./*)" ;
-#           rr:datatype xsd:string ;
-#         ]
-#       ]
-#     ]
-#   ]
-# .
+:Geometrie_gmltype a rr:PredicateObjectMap ;
+  rr:predicate rdf:type ;
+  rr:objectMap [
+    fnml:functionValue [
+      rml:logicalSource :Function_LogicalSource ;
+      rr:subjectMap :SimpleExecutionMapping ;
+      rr:predicateObjectMap
+      [
+        rr:predicate fno:executes ;
+        rr:object fnPdok:getGmlClass ;
+      ] ,
+      [
+        rr:predicate fnPdok:valueParameter ;
+        rr:objectMap [
+          rml:reference "serialize(app:geometrie/*)" ;
+          rr:datatype xsd:string ;
+        ]
+      ]
+    ]
+  ]
+.
 
 :Geometrie_geometrie_wkt a rr:PredicateObjectMap ;
   rr:predicate ogc:asWKT ;
